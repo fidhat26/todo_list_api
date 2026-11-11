@@ -10,7 +10,7 @@ let tasks = [];
 let id = 1;
 
 //Display all tasks
-app.get("/task",(req, res) =>{
+app.get("/tasks",(req, res) =>{
     res.json(tasks);
 });
 
