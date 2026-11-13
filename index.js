@@ -4,16 +4,13 @@ const cors = require('cors');
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://sweet-cupcake-38324a.netlify.app'
-];
-
 app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: [
+    'http://localhost:5173',
+    'https://sweet-cupcake-38324a.netlify.app'
+  ]
 }));
+
 
 app.use(express.json());
 
