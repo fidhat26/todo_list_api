@@ -1,23 +1,27 @@
 
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://sweet-cupcake-38324a.netlify.app'
-  ]
-}));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://sweet-cupcake-38324a.netlify.app'
+];
 
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 
 // Home route
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'To-Do API is running',
+    message: 'To-Do API is running'
   });
 });
 
@@ -27,7 +31,7 @@ app.use('/tasks', require('./routes/taskRoutes'));
 // Handle unknown routes
 app.use((req, res) => {
   res.status(404).json({
-    message: 'Route not found',
+    message: 'Route not found'
   });
 });
 
@@ -41,18 +45,18 @@ app.use((err, req, res, next) => {
 
   if (err.name === 'ValidationError') {
     return res.status(400).json({
-      message: err.message,
+      message: err.message
     });
   }
 
   if (err.name === 'CastError') {
     return res.status(400).json({
-      message: 'Invalid ID or value',
+      message: 'Invalid ID or value'
     });
   }
 
   res.status(500).json({
-    message: 'Internal server error',
+    message: 'Internal server error'
   });
 });
 
@@ -72,6 +76,6 @@ async function startServer() {
 }
 
 startServer().catch((error) => {
-  console.error('Server startup failed:', error.message);
+  console.error('Server startup failed:', error);
   process.exit(1);
 });
